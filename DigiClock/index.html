@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        html, body{
+            background-color: black;
+            display: grid;
+            height: 100%;
+            place-items: center;
+        }
+        .frame{
+            height:100px;
+            width: 360px;
+            background: linear-gradient(136deg, #14ffe9, #ffeb3b, #ff00e0);
+            border-radius: 10px;
+            animation: animate 1.5s linear infinite;
+        }
+        .frame .clock{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: #1b1b1b;
+            transform: translate(-50%, -50%);
+            height: 85px;
+            width: 345px;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .frame .clock #time {
+            line-height: 85px;
+            color:#fff;
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(136deg, #14ffe9, #ffeb3b, #ff00e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: animate 1.5s linear infinite;
+        }
+        @keyframes animate {
+            100%{
+                filter: hue-rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class = "frame">
+        <div class="clock">
+           <div id ="time">12 : 00 : 00 PM</div> 
+        </div>
+    </div>
+
+<script>
+const time = document.getElementById('time');
+
+setInterval(() => {
+    time.innerText = new Date().toLocaleTimeString();
+    // Faltu line ---------
+    /* let sec = date.getSeconds() ;
+    let min = date.getMinutes();
+    let hour = date.getHours();
+
+    let day_night = "AM";
+    if(hour > 12){
+        day_night = "PM";
+        hour = hour - 12;
+    }
+    if(hour < 10){
+        hour = "0" + hour;
+    }
+    if(min < 10){
+        min = "0" + min;
+    }
+    if(sec < 10){
+        sec = "0" + sec;
+    }
+    time.innerText = `${hour} : ${min} : ${sec}  ${day_night}`; */
+}, 1000)
+
+
+</script>
+</body>
+</html>
