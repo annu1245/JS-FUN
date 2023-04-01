@@ -2,6 +2,7 @@
     width: 100vw;
     height: 100vh;
     background-color: antiquewhite;
+    overflow: hidden;
 }
 
 #box {
@@ -27,4 +28,44 @@
     align-items: center;
     position: absolute;
     bottom: 0;
+}
+
+.circle{
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    margin-bottom: -5px;
+    border-radius: 50%;
+}
+
+.tail {
+    height: 20px;
+    width: 10px;
+    margin-left: 0.5px;
+    border-radius: 80%;
+
+    /* background-color: yelbalow; */
+}
+
+.tail1 {
+    border-left: 2px solid green;
+    /* border-bottom: 2px solid green; */
+    -ms-transform: rotate(-10deg); /* IE 9 */
+    transform: rotate(-10deg);
+    margin-bottom: -5px;
+}
+
+.tail2 {
+    border-right: 2px solid green;
+    margin-left: -5px;
+    /* border-top: 2px solid green; */
+    /* border-bottom: 2px solid green; */
+}
+
+.tail3 {
+    border-left: 2px solid green;
+    /* border-top: 2px solid green; */
+    -ms-transform: rotate(10deg); /* IE 9 */
+    transform: rotate(10deg);
+    margin-top: -5px;
 }

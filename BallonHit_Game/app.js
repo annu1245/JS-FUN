@@ -1,38 +1,45 @@
+import Ballon from "./Ballon.js";
+
+Array.prototype.choose = function() {
+    return this[Math.floor(Math.random() * this.length)];
+}
+
 const box = document.getElementById('box');
-const box_y = box.getBoundingClientRect().y;
-const ballon = document.getElementById('alpha-A');
+const box_top_pos = box.getBoundingClientRect().y;
 const ballon_positions = [ 10, 30, 50, 70, 90 ];
-const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+const alphabets = ['A', 'B', 'B', 'A', 'A', 'B', 'A'];
 
-function releaseBallon(alpha) {
-    const alpha_bottom = parseInt(alpha.style.bottom) + 1.5;
-    alpha.style.bottom = alpha_bottom + 'px';
-    const alpha_y = alpha.getBoundingClientRect().y
-    if (alpha_y > box_y) {
-        cancelAnimationFrame(alpha.getAttribute('timer'));
+function releaseBallon(ballon) {
+    const alpha_bottom = parseInt(ballon.alpha.style.bottom) + 1.5;
+    ballon.alpha.style.bottom = alpha_bottom + 'px';
+    try {
+        const ballon_top_pos = ballon.alpha.getBoundingClientRect().y
+        if (ballon_top_pos < box_top_pos) {
+            cancelAnimationFrame(ballon.frame_id);
+            ballon.delete();
+            ballon = null;
+            return;
+        }            
+    } catch (error) {
+        cancelAnimationFrame(ballon.frame_id);
+        ballon = null;
+        return;
     }
-    alpha.setAttribute('timer', requestAnimationFrame(() => releaseBallon(alpha)));
+    return ballon.frame_id = requestAnimationFrame(() => releaseBallon(ballon));
 }
 
-function choose(choices) {
-    var index = Math.floor(Math.random() * choices.length);
-    return choices[index];
-}
 
-function createBallon() {
-    letter = choose(alphabets);
-    const alpha = document.createElement('div');
-    alpha.id = "alpha-" + letter;
-    alpha.className = "ballon";
-    alpha.innerText = letter;
-    alpha.style.left = choose(ballon_positions) + '%';
-    alpha.style.bottom = '0px';
-    box.appendChild(alpha);
-    return alpha;
-}
+document.addEventListener("keyup", (event) => {
+    const alpha_id = "alpha-" + event.key.toUpperCase();
+    document.getElementById(alpha_id)?.remove();
+})
 
 
 setInterval(() => {
-    const alpha = createBallon();
-    alpha.setAttribute('timer', requestAnimationFrame(() => releaseBallon(alpha)));
-}, 2000)
+    const letter = alphabets.choose();
+    const ballon_position = ballon_positions.choose();
+    const ballon = new Ballon(box, ballon_position, letter);
+    ballon.frame_id = requestAnimationFrame(() => releaseBallon(ballon));
+}, 2000);
+
+
